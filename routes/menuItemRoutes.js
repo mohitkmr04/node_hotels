@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express();
-const MenuItem = require('./../models/MenuItem');
+import express from 'express';
+const router = express.Router();
+import MenuItem from '../models/MenuItem.js';
 
 // Get method to get the menu
 router.get('/',async(req,res)=>{
@@ -51,4 +51,4 @@ router.get('/:taste',async(req,res)=>{
   }
 })
 
-module.exports = router;
+export default router;

@@ -1,29 +1,28 @@
-// const jsonString = '{"name":"John","age":30,"city":"New York"}';
-// const  jsonObject = JSON.parse(jsonString); //Converts JSON string to object
-// console.log(jsonObject.name);
-
-// const objectToConvert = {
-//     name: "Alice",
-//     age: 25
-// }
-// const json = JSON.stringify(objectToConvert);
-// console.log(json);
-// console.log(typeof json);
-// console.log(typeof objectToConvert);
-
-const express = require("express");
+import express from  'express';
 const app = express();
-const db = require("./db");
-require('dotenv').config();
-
-const bodyParser = require("body-parser");
+import db from './db.js';
+import dotenv from 'dotenv';
+import passport from "./auth.js";
+import MenuItem from './models/MenuItem.js';
+import bodyParser from "body-parser";
 app.use(bodyParser.json()); // req.body
 const PORT = process.env.PORT || 3000;
 
-const Person = require("./models/Person");
-const MenuItem = require('./models/MenuItem');
+// MiddleWare Function
+const logRequest = (req,res,next) => {
+  // console.log(`${new Date().toLocaleString()} Request Made to : ${req.originalUrl}`);
+  next(); // Move on the next phase
+}
 
-app.get("/", (req, res) => {
+
+app.use(logRequest);
+
+
+
+app.use(passport.initialize());
+
+const localAuthMiddleware = passport.authenticate('local', {session:false});
+app.get("/",(req, res) => {
   res.send("Welcome to our Hotel !!!");
 });
 
@@ -52,9 +51,9 @@ app.post("/items", (req, res) => {
 
 
 //Import the router files
-const personRoutes = require('./routes/personRoutes');
-const menuItemRoutes = require('./routes/menuItemRoutes');
-app.use('/person',personRoutes);
+import personRoutes from './routes/personRoutes.js';
+import menuItemRoutes from './routes/menuItemRoutes.js';
+app.use('/person',localAuthMiddleware,personRoutes);
 app.use('/menu',menuItemRoutes);
 
 

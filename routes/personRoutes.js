@@ -1,6 +1,6 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const Person = require('./../models/Person');
+import Person from '../models/Person.js';
 
 // Post route to add a person
 router.post("/", async(req, res) => {
@@ -93,5 +93,4 @@ router.delete('/:id',async(req,res)=>{
 })
 
 
-
-module.exports = router;
+export default router;

@@ -1,9 +1,9 @@
-const mongoose=require('mongoose');
-require('dotenv').config();
-
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 // Define the MongoDB connection URL
-// const mongoURL =  process.env.MONGODB_URL_LOCAL //Replace 'hotels' with your database name
-const mongoURL = 'mongodb+srv://kmrmohit04:qwerty12345@cluster0.mq9oxep.mongodb.net/hotels?retryWrites=true&w=majority'
+const mongoURL =  process.env.MONGODB_URL_LOCAL //Replace 'hotels' with your database name
+// const mongoURL = 'mongodb+srv://kmrmohit04:qwerty12345@cluster0.mq9oxep.mongodb.net/hotels?retryWrites=true&w=majority'
 
 //Set up MongoDB connection
 mongoose.connect(mongoURL, {
@@ -30,4 +30,4 @@ db.on('disconnected', () => {
 
 
 // Export the database connection
-module.exports = db;
+export default db;
