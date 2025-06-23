@@ -22,6 +22,7 @@ app.use(logRequest);
 app.use(passport.initialize());
 
 const localAuthMiddleware = passport.authenticate('local', {session:false});
+
 app.get("/",(req, res) => {
   res.send("Welcome to our Hotel !!!");
 });
@@ -29,6 +30,7 @@ app.get("/",(req, res) => {
 app.get("/chicken", (req, res) => {
   res.send("Sure Sir, I would love to serve chicken");
 });
+
 app.get("/idly", (req, res) => {
   var customised_idli = {
     name: "rava idli",
@@ -38,25 +40,19 @@ app.get("/idly", (req, res) => {
   };
   res.send(customised_idli);
 });
+
 app.post("/items", (req, res) => {
   res.send("Data is saved");
 });
 
 
-
-
-
-
-
-
-
 //Import the router files
 import personRoutes from './routes/personRoutes.js';
 import menuItemRoutes from './routes/menuItemRoutes.js';
-app.use('/person',localAuthMiddleware,personRoutes);
+app.use('/person',personRoutes);
 app.use('/menu',menuItemRoutes);
 
 
 app.listen(PORT, () => {
-  console.log("Listening on Port 3000");
+  console.log(`Listening on ${PORT}`);
 });
